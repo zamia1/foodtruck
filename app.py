@@ -1,4 +1,5 @@
 ### Start solution here
+
 import pandas as pd
 import os, django
 
@@ -80,7 +81,9 @@ def query_location():
             foodtruck_loc.append(longi)
             dl=distance.distance(foodtruck_loc, myloc).miles
             data['distance'][index] =dl 
-
+        data=data.sort_values(by=['distance'])
+        if data.shape[0]>5:
+            data=data.iloc[:5]
         return render_template("udata.html",  tables=[data.to_html(classes='data')], titles=data.columns.values)
     else:
         return render_template("locationform.html")
